@@ -43,5 +43,13 @@ class User < ApplicationRecord
   def favorite?(micropost)
     self.favorites.include?(micropost)
   end
+  
+  def feed_microposts
+    Micropost.where(user_id: self.following_ids + [self.id])
+  end
+  
+  def feed_favorites
+    Micropost.where(user_id: self.favorite_ids + [self.id])
+  end
 
 end
